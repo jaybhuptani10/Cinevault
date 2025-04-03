@@ -12,11 +12,10 @@ const RatingComponent = ({ mediaType, tmdbId, userId }) => {
   useEffect(() => {
     const fetchUserRating = async () => {
       try {
-        console.log("Fetching user rating...");
         const response = await axios.get(
           `/user/rating/${mediaType}/${tmdbId}`,
           {
-            params: { userId }, // Pass userId as query parameter
+            params: { userId },
             headers: {
               "x-auth-token": localStorage.getItem("authToken"),
             },
@@ -24,7 +23,7 @@ const RatingComponent = ({ mediaType, tmdbId, userId }) => {
         );
 
         if (response.data) {
-          setRating(response.data.userRating || 0); // Set user's own rating
+          setRating(response.data.userRating || 0);
         }
       } catch (err) {
         console.error("Error fetching user rating:", err);
@@ -38,7 +37,6 @@ const RatingComponent = ({ mediaType, tmdbId, userId }) => {
 
   // Handle submit rating
   const submitRating = async (newRating) => {
-    console.log("Submitting rating:", newRating);
     setIsSubmitting(true);
     setError(null);
     setSuccess(false);
@@ -57,8 +55,6 @@ const RatingComponent = ({ mediaType, tmdbId, userId }) => {
         mediaType: String(mediaType),
         rating: Number(newRating),
       };
-
-      console.log("Sending payload:", JSON.stringify(payload, null, 2));
 
       const response = await axios.post(`/user/rate`, payload, {
         headers: {
@@ -84,28 +80,20 @@ const RatingComponent = ({ mediaType, tmdbId, userId }) => {
     }
   };
 
-  // Handle star click for rating submission with improved logic
+  // Handle star click for rating submission
   const handleStarClick = (clickedValue) => {
     if (isSubmitting) return;
 
-    // Calculate both full star and half star values
     const fullStar = clickedValue;
     const halfStar = clickedValue - 0.5;
 
     let newRating;
 
-    // Logic for cycling through rating states:
-    // If current rating is 0, set to full star
-    // If current rating is full star, set to half star
-    // If current rating is half star, set to 0
     if (Math.abs(rating - fullStar) < 0.1) {
-      // We have a full star, change to half star
       newRating = halfStar;
     } else if (Math.abs(rating - halfStar) < 0.1) {
-      // We have a half star, remove rating
       newRating = 0;
     } else {
-      // Set to full star
       newRating = fullStar;
     }
 
@@ -113,7 +101,7 @@ const RatingComponent = ({ mediaType, tmdbId, userId }) => {
     submitRating(newRating);
   };
 
-  // Render stars dynamically with improved rendering
+  // Render stars dynamically
   const renderStars = () => {
     return [...Array(5)].map((_, i) => {
       const starIndex = i + 1;
@@ -132,7 +120,6 @@ const RatingComponent = ({ mediaType, tmdbId, userId }) => {
           aria-label={`Rate ${starIndex} stars`}
         >
           {hoveredRating > 0 ? (
-            // Show hover state
             <span
               className={`${
                 hoveredRating >= starIndex ? "text-yellow-300" : "text-gray-500"
@@ -140,8 +127,7 @@ const RatingComponent = ({ mediaType, tmdbId, userId }) => {
             >
               ★
             </span>
-          ) : // Show actual rating state
-          isFullStar ? (
+          ) : isFullStar ? (
             <span className="text-yellow-400">★</span>
           ) : isHalfStar ? (
             <div className="relative inline-block">

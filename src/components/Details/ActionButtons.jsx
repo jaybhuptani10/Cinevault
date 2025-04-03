@@ -53,7 +53,6 @@ const ActionButtons = ({
   // Utility function to make API requests
   const toggleState = async (stateType, apiEndpoint, setStateFunction) => {
     setLoading((prev) => ({ ...prev, [stateType]: true }));
-    console.log(`Toggling ${stateType} state...`);
 
     const token = localStorage.getItem("authToken");
     if (!token) {
@@ -74,7 +73,7 @@ const ActionButtons = ({
       );
 
       console.log(`API Response for ${stateType}:`, response.data);
-      setStateFunction(response.data[stateType]);
+      setStateFunction(response.data[stateType]); // Toggle state based on API response
     } catch (error) {
       console.error(
         `Error toggling ${stateType}:`,
@@ -117,7 +116,7 @@ const ActionButtons = ({
             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
           ></path>
         </svg>
-        <span>{watched ? "Watched" : "Watch"}</span>
+        <span>{watched ? "Unwatch" : "Watch"}</span>
         {loading.watched && (
           <svg
             className="animate-spin ml-2 h-4 w-4"
@@ -166,7 +165,7 @@ const ActionButtons = ({
             d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
           ></path>
         </svg>
-        <span>{liked ? "Liked" : "Like"}</span>
+        <span>{liked ? "Unlike" : "Like"}</span>
         {loading.liked && (
           <svg
             className="animate-spin ml-2 h-4 w-4"
@@ -219,7 +218,7 @@ const ActionButtons = ({
             }
           ></path>
         </svg>
-        <span>{watchlisted ? "Watchlisted" : "Watchlist"}</span>
+        <span>{watchlisted ? "Remove" : "Watchlist"}</span>
         {loading.watchlisted && (
           <svg
             className="animate-spin ml-2 h-4 w-4"
