@@ -1,0 +1,10 @@
+{
+    "rewrites": [
+      { "source": "/login", "destination": "/" },
+      { "source": "/register", "destination": "/" },
+      { "source": "/profile", "destination": "/" },
+      { "source": "/details/:content/:id", "destination": "/" },
+      { "source": "/search", "destination": "/" }
+    ]
+  }
+  
