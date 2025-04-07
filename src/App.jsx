@@ -13,7 +13,7 @@ import SearchResults from "./components/comp/SearchResult";
 import ProfilePage from "./components/Profile/Profile";
 
 const App = () => {
-  axios.defaults.baseURL = "https://philmyshitt-backend.vercel.app/";
+  axios.defaults.baseURL = "https://philmyshitt-backend-git-stable-jaybhuptani10s-projects.vercel.app/";
   // axios.defaults.baseURL = "http://localhost:8000/";
   axios.defaults.withCredentials = true;
 
